@@ -14,8 +14,11 @@ const auth = async(req, res, next)=> {
 
         // console.log(decodedToken)
         let studentPK = decodedToken.pk;
+        // console.log(studentPK)
 
-        let query = `SELECT StudentIDPK, StudName, StudEmail from Student where StudentIDPK = ${studentPK} and Token = ${myToken}`
+        let query = `SELECT StudentIDPK, StudName, StudEmail from Student where StudentIDPK = ${studentPK} and Token = '${myToken}'`
+
+        // console.log(query)
 
         let returnedUser = await db.executeQuery(query)
         // console.log(returnedUser)
