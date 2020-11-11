@@ -3,8 +3,10 @@ const db = require('./dbConnectTLof.js')
 const app = express();
 const jwt = require('jsonwebtoken')
 const config = require('./config.js')
+const cors = require('cors')
 // const bcrypt = require('bcryptjs')
 app.use(express.json())
+app.use(cors())
 
 //Question 1
 app.get("/course", (req, res) => {
@@ -23,7 +25,9 @@ app.get("/course", (req, res) => {
         })
 })
 
-//set port for local host
-app.listen(5000, () => {
-    console.log("app is running on port 5000")
+//set port 
+
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+    console.log(`app is running on port ${PORT}`)
 })
