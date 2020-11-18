@@ -167,6 +167,55 @@ app.post('/student/logout', auth, (req, res) => {
     })
 })
 
+//Question 6
+app.post("/assignment", auth, async (req, res) => {
+
+    try{
+        console.log(req.body)
+
+       
+
+        var courseIDFK = req.body.courseIDFK;
+        var grade   = req.body.grade
+        var summary = req.body.summary;
+        var improvements = req.body.improvements;
+    
+        if(!courseIDFK || !summary || !grade || !improvements){
+            res.status(400).send("bad request")
+        }
+        summary = summary.replace("'", "''")
+        improvements = improvements.replace("'", "''")
+
+
+        let insertQuery = `Insert into Assignment (Grade, Summary, Improvements, StudentIDFK, CourseIDFK)
+        output inserted.Grade, inserted.Summary, inserted.Improvements, inserted.CourseIDFK
+        Values ('${grade}', '${summary}', '${improvements}', ${req.student.StudentIDPK},${courseIDFK})`
+
+        let insertedAssignment = await db.executeQuery(insertQuery)
+
+        res.status(200).send(insertedAssignment[0])
+    }
+    catch(error){
+        console.log("error in POST /assignment", error);
+        res.status(500).send()
+    }
+   
+})
+
+//Question 7
+app.get('/assignment/records', auth, async (req, res) => {
+    let getQuery =`Select * from Assignment where StudentIDFK = ${req.student.StudentIDPK}`
+
+    let allRecords = await db.executeQuery(getQuery)
+
+    res.status(200).send(allRecords)
+})
+
+//HEO 11
+app.get('/student/me', auth, (req, res) => {
+    res.send(req.student)
+})
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
     console.log(`app is running on port ${PORT}`)

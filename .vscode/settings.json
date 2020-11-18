@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a25b0c5d-9f1c-460f-82bc-6c737143d556/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cis410-fa20-barnquist-api",
+    "appService.deploySubpath": "."
+}
